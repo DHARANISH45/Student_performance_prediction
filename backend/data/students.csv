@@ -1,0 +1,11 @@
+student_id,Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Previous_Scores,Internet_Access,Tutoring_Sessions,Family_Income,Peer_Influence,Learning_Disabilities,Parental_Education_Level,Distance_from_Home,Gender,result
+1001,8,95,High,High,78,Yes,5,85000,Positive,No,Graduate,2,Male,Pass
+1002,4,65,Low,Medium,45,Yes,1,40000,Negative,No,High School,8,Female,Fail
+1003,7,85,Medium,High,67,Yes,3,65000,Positive,No,College,5,Female,Pass
+1004,3,55,Low,Low,40,No,0,25000,Negative,Yes,High School,12,Male,Fail
+1005,9,90,High,High,85,Yes,4,95000,Positive,No,Post Graduate,1,Female,Pass
+1006,5,70,Medium,Medium,58,Yes,2,55000,Neutral,No,College,7,Male,Pass
+1007,2,45,Low,Low,35,No,0,20000,Negative,Yes,Middle School,15,Female,Fail
+1008,6,80,Medium,High,72,Yes,3,70000,Positive,No,College,3,Male,Pass
+1009,4,60,Low,Medium,50,Yes,1,45000,Neutral,No,High School,10,Female,Fail
+1010,7,85,High,Medium,76,Yes,4,80000,Positive,No,Graduate,4,Male,Pass
