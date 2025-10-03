@@ -53,6 +53,11 @@ expected = [
     'Distance_from_Home', 'Gender'
 ]
 
+# Columns to exclude from training (like identifiers)
+exclude_columns = ['student_id', 'Student_Name']
+
+# Student_Name is not used for prediction, so we don't include it in expected columns
+
 print(f"[{time.strftime('%H:%M:%S')}] Preprocessing data...")
 
 # Ensure we have all the columns we need
@@ -62,7 +67,7 @@ if missing_columns:
 
 # Create a copy only if needed
 needs_copy = False
-if 'student_id' in df.columns:
+if 'student_id' in df.columns or 'Student_Name' in df.columns:
     needs_copy = True
 
 # Handle result column
@@ -103,8 +108,14 @@ for col in numeric_cols:
 
 # Prepare X, y more efficiently
 print(f"[{time.strftime('%H:%M:%S')}] Preparing training data...")
+# Make sure we're only using expected columns for training
 X = df[expected].copy()
 y = (df['result'].astype(str).str.lower() == 'pass').astype(np.int8)  # Use int8 for memory efficiency
+
+# Log if we excluded any columns that were in the dataset but not used
+for col in df.columns:
+    if col not in expected and col != 'result' and col not in exclude_columns:
+        print(f"[{time.strftime('%H:%M:%S')}] Note: Column '{col}' present in data but not used for training")
 
 # Identify numeric vs categorical columns
 print(f"[{time.strftime('%H:%M:%S')}] Setting up model pipeline...")

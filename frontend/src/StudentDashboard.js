@@ -16,31 +16,31 @@ export default function StudentDashboard({token, onLogout}){
     const probability = me.prediction_probability ? Number(me.prediction_probability) * 100 : null;
     
     return (
-      <Card sx={{mt:2, backgroundColor: isPassing ? '#e8f5e9' : '#ffebee', border: `1px solid ${isPassing ? '#4caf50' : '#ef5350'}`}}>
+      <Card className={`prediction-card ${isPassing ? 'pass-card' : 'fail-card'}`} sx={{mt:2, backgroundColor: isPassing ? '#e8f5e9' : '#ffebee', border: `1px solid ${isPassing ? '#4caf50' : '#ef5350'}`}}>
         <CardContent>
-          <Typography variant="h6" sx={{color: isPassing ? '#2e7d32' : '#c62828', fontWeight: 'bold'}}>
+          <Typography variant="h6" className="prediction-title" sx={{color: isPassing ? '#2e7d32' : '#c62828', fontWeight: 'bold'}}>
             Prediction: {me.result}
           </Typography>
           
           {probability !== null && (
-            <Typography variant="body1" sx={{mt:1}}>
-              Confidence: {probability.toFixed(1)}%
+            <Typography variant="body1" className="confidence-display" sx={{mt:1}}>
+              Confidence: <span className="confidence-value">{probability.toFixed(1)}%</span>
             </Typography>
           )}
           
-          <Typography variant="body2" sx={{mt:2, fontStyle: 'italic'}}>
+          <Typography variant="body2" className="prediction-message" sx={{mt:2, fontStyle: 'italic'}}>
             {isPassing ? 
               'Great job! Based on your academic performance, you are predicted to pass.' : 
               'Based on your current performance, you may need additional support to pass. Consider seeking help from teachers.'}
           </Typography>
           
-          <Box sx={{mt:2}}>
-            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Key Factors:</Typography>
-            <ul style={{margin: '8px 0'}}>
-              <li>Hours Studied: {me.Hours_Studied || 'N/A'} hours {Number(me.Hours_Studied) >= 5 ? '✅' : '⚠️'}</li>
-              <li>Previous Scores: {me.Previous_Scores || 'N/A'} {Number(me.Previous_Scores) >= 50 ? '✅' : '⚠️'}</li>
-              <li>Attendance: {me.Attendance || 'N/A'}% {Number(me.Attendance) >= 70 ? '✅' : '⚠️'}</li>
-              {me.Tutoring_Sessions && <li>Tutoring Sessions: {me.Tutoring_Sessions} sessions</li>}
+          <Box sx={{mt:2}} className="key-factors">
+            <Typography variant="subtitle2" className="factors-title" sx={{fontWeight: 'bold'}}>Key Factors:</Typography>
+            <ul className="factors-list" style={{margin: '8px 0'}}>
+              <li className="factor-item">Hours Studied: <span className="factor-value">{me.Hours_Studied || 'N/A'}</span> hours {Number(me.Hours_Studied) >= 5 ? '✅' : '⚠️'}</li>
+              <li className="factor-item">Previous Scores: <span className="factor-value">{me.Previous_Scores || 'N/A'}</span> {Number(me.Previous_Scores) >= 50 ? '✅' : '⚠️'}</li>
+              <li className="factor-item">Attendance: <span className="factor-value">{me.Attendance || 'N/A'}%</span> {Number(me.Attendance) >= 70 ? '✅' : '⚠️'}</li>
+              {me.Tutoring_Sessions && <li className="factor-item">Tutoring Sessions: <span className="factor-value">{me.Tutoring_Sessions}</span> sessions</li>}
             </ul>
           </Box>
         </CardContent>
@@ -49,26 +49,33 @@ export default function StudentDashboard({token, onLogout}){
   };
 
   return (
-    <Box sx={{p:2}}>
-      <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-        <Typography variant="h5">Student Dashboard</Typography>
-        <Button variant="contained" color="error" onClick={onLogout}>Logout</Button>
+    <Box sx={{p:2}} className="dashboard student-dashboard">
+      <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}} className="dashboard-header">
+        <Box className="title-container">
+          <Typography variant="h5" className="dashboard-title">Student Dashboard</Typography>
+          {me && me.Student_Name && (
+            <Typography variant="h6" color="primary" sx={{mt:0.5}} className="student-welcome">
+              Welcome, <span className="student-name">{me.Student_Name}</span>
+            </Typography>
+          )}
+        </Box>
+        <Button variant="contained" color="error" onClick={onLogout} className="logout-button">Logout</Button>
       </Box>
       
       {me && getPredictionCard()}
       
-      <Card sx={{mt:2}}><CardContent>
-        <Typography variant="h6">Your Details</Typography>
+      <Card sx={{mt:2}} className="data-card"><CardContent>
+        <Typography variant="h6" className="card-title">Your Details</Typography>
         {me ? (
-          <div>
-            <table style={{width:'100%'}}>
+          <div className="student-details-container">
+            <table className="student-details-table" style={{width:'100%', borderCollapse: 'collapse'}}>
               <tbody>
                 {Object.keys(me)
-                  .filter(k => k !== 'prediction_probability') // Hide technical fields
+                  .filter(k => !['prediction_probability', '__v', '_id'].includes(k)) // Hide technical fields
                   .map(k => (
-                    <tr key={k}>
-                      <td style={{padding:6, fontWeight:'600'}}>{k}</td>
-                      <td style={{padding:6}}>{String(me[k])}</td>
+                    <tr key={k} className="detail-row">
+                      <td className="detail-label" style={{padding:8, fontWeight:'600', borderBottom: '1px solid #eee'}}>{k}</td>
+                      <td className="detail-value" style={{padding:8, borderBottom: '1px solid #eee'}}>{String(me[k])}</td>
                     </tr>
                   ))}
               </tbody>
@@ -78,23 +85,23 @@ export default function StudentDashboard({token, onLogout}){
       </CardContent></Card>
       
       {me && me.result && (
-        <Card sx={{mt:2}}><CardContent>
-          <Typography variant="h6">Improvement Tips</Typography>
-          <Box sx={{mt:1}}>
-            <ul>
+        <Card sx={{mt:2}} className="improvement-tips-card"><CardContent>
+          <Typography variant="h6" className="tips-title">Improvement Tips</Typography>
+          <Box sx={{mt:1}} className="tips-container">
+            <ul className="tips-list">
               {Number(me.Hours_Studied) < 5 && (
-                <li><Typography>Consider increasing your study hours to at least 5 hours.</Typography></li>
+                <li className="tip-item"><Typography className="tip-text">📚 Consider increasing your study hours to at least 5 hours.</Typography></li>
               )}
               {Number(me.Attendance) < 70 && (
-                <li><Typography>Try to improve your attendance to at least 70%.</Typography></li>
+                <li className="tip-item"><Typography className="tip-text">📅 Try to improve your attendance to at least 70%.</Typography></li>
               )}
               {Number(me.Previous_Scores) < 50 && (
-                <li><Typography>Focus on improving your previous scores through regular practice.</Typography></li>
+                <li className="tip-item"><Typography className="tip-text">📈 Focus on improving your previous scores through regular practice.</Typography></li>
               )}
               {Number(me.Tutoring_Sessions || 0) < 3 && (
-                <li><Typography>Consider attending more tutoring sessions for additional help.</Typography></li>
+                <li className="tip-item"><Typography className="tip-text">👨‍🏫 Consider attending more tutoring sessions for additional help.</Typography></li>
               )}
-              <li><Typography>Connect with teachers for personalized guidance on improving your performance.</Typography></li>
+              <li className="tip-item"><Typography className="tip-text">🤝 Connect with teachers for personalized guidance on improving your performance.</Typography></li>
             </ul>
           </Box>
         </CardContent></Card>

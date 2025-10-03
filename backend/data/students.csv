@@ -1,11 +1,101 @@
-student_id,Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Previous_Scores,Internet_Access,Tutoring_Sessions,Family_Income,Peer_Influence,Learning_Disabilities,Parental_Education_Level,Distance_from_Home,Gender,result
-1001,8,95,High,High,78,Yes,5,85000,Positive,No,Graduate,2,Male,Pass
-1002,4,65,Low,Medium,45,Yes,1,40000,Negative,No,High School,8,Female,Fail
-1003,7,85,Medium,High,67,Yes,3,65000,Positive,No,College,5,Female,Pass
-1004,3,55,Low,Low,40,No,0,25000,Negative,Yes,High School,12,Male,Fail
-1005,9,90,High,High,85,Yes,4,95000,Positive,No,Post Graduate,1,Female,Pass
-1006,5,70,Medium,Medium,58,Yes,2,55000,Neutral,No,College,7,Male,Pass
-1007,2,45,Low,Low,35,No,0,20000,Negative,Yes,Middle School,15,Female,Fail
-1008,6,80,Medium,High,72,Yes,3,70000,Positive,No,College,3,Male,Pass
-1009,4,60,Low,Medium,50,Yes,1,45000,Neutral,No,High School,10,Female,Fail
-1010,7,85,High,Medium,76,Yes,4,80000,Positive,No,Graduate,4,Male,Pass
+student_id,Student_Name,Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Previous_Scores,Internet_Access,Tutoring_Sessions,Family_Income,Peer_Influence,Learning_Disabilities,Parental_Education_Level,Distance_from_Home,Gender,result
+1001,John Smith,8,95,High,High,78,Yes,5,85000,Positive,No,Graduate,2,Male,Pass
+1002,Emily Johnson,4,65,Low,Medium,45,Yes,1,40000,Negative,No,High School,8,Female,Fail
+1003,Sarah Williams,7,85,Medium,High,67,Yes,3,65000,Positive,No,College,5,Female,Pass
+1004,Michael Brown,3,55,Low,Low,40,No,0,25000,Negative,Yes,High School,12,Male,Fail
+1005,Jessica Davis,9,90,High,High,85,Yes,4,95000,Positive,No,Post Graduate,1,Female,Pass
+1006,David Miller,5,70,Medium,Medium,58,Yes,2,55000,Neutral,No,College,7,Male,Pass
+1007,Jennifer Wilson,2,45,Low,Low,35,No,0,20000,Negative,Yes,Middle School,15,Female,Fail
+1008,Robert Taylor,6,80,Medium,High,72,Yes,3,70000,Positive,No,College,3,Male,Pass
+1009,Lisa Anderson,4,60,Low,Medium,50,Yes,1,45000,Neutral,No,High School,10,Female,Fail
+1010,James Thomas,7,85,High,Medium,76,Yes,4,80000,Positive,No,Graduate,4,Male,Pass
+1011,Sophia Martinez,9,92,High,High,88,Yes,6,92000,Positive,No,Post Graduate,1,Female,Pass
+1012,Daniel Garcia,3,58,Low,Low,42,No,0,30000,Negative,Yes,High School,11,Male,Fail
+1013,Olivia Rodriguez,6,78,Medium,Medium,65,Yes,2,60000,Neutral,No,College,6,Female,Pass
+1014,Matthew Lopez,5,72,Medium,High,70,Yes,3,68000,Positive,No,Graduate,4,Male,Pass
+1015,Emma Lee,2,48,Low,Low,38,No,1,22000,Negative,Yes,Middle School,14,Female,Fail
+1016,William Harris,8,88,High,High,82,Yes,5,88000,Positive,No,Post Graduate,2,Male,Pass
+1017,Ava Clark,4,62,Low,Medium,48,Yes,1,42000,Neutral,No,High School,9,Female,Fail
+1018,Christopher Lewis,7,82,Medium,High,75,Yes,4,75000,Positive,No,Graduate,3,Male,Pass
+1019,Isabella Walker,3,52,Low,Low,36,No,0,26000,Negative,Yes,Middle School,13,Female,Fail
+1020,Andrew Hall,9,94,High,High,90,Yes,6,98000,Positive,No,Post Graduate,1,Male,Pass
+1021,Mia Allen,5,68,Medium,Medium,56,Yes,2,52000,Neutral,No,College,8,Female,Pass
+1022,Ethan Young,2,50,Low,Low,39,No,0,23000,Negative,Yes,High School,12,Male,Fail
+1023,Charlotte Hernandez,7,86,High,High,80,Yes,4,86000,Positive,No,Graduate,2,Female,Pass
+1024,Alexander King,4,64,Low,Medium,47,Yes,1,41000,Neutral,No,High School,9,Male,Fail
+1025,Amelia Wright,8,91,High,High,83,Yes,5,89000,Positive,No,Post Graduate,1,Female,Pass
+1026,Benjamin Scott,3,54,Low,Low,38,No,0,24000,Negative,Yes,Middle School,13,Male,Fail
+1027,Harper Green,6,79,Medium,High,69,Yes,3,67000,Positive,No,College,5,Female,Pass
+1028,Sebastian Adams,5,71,Medium,Medium,57,Yes,2,56000,Neutral,No,College,7,Male,Pass
+1029,Evelyn Baker,2,47,Low,Low,34,No,0,21000,Negative,Yes,Middle School,15,Female,Fail
+1030,Samuel Nelson,8,89,High,High,84,Yes,5,90000,Positive,No,Post Graduate,2,Male,Pass
+1031,Abigail Carter,4,63,Low,Medium,46,Yes,1,43000,Neutral,No,High School,8,Female,Fail
+1032,Noah Mitchell,7,84,Medium,High,74,Yes,4,76000,Positive,No,Graduate,3,Male,Pass
+1033,Madison Perez,3,53,Low,Low,37,No,0,27000,Negative,Yes,High School,12,Female,Fail
+1034,Jacob Roberts,9,93,High,High,89,Yes,6,96000,Positive,No,Post Graduate,1,Male,Pass
+1035,Elizabeth Turner,5,69,Medium,Medium,59,Yes,2,54000,Neutral,No,College,7,Female,Pass
+1036,Henry Phillips,6,77,Medium,High,68,Yes,3,66000,Positive,No,Graduate,4,Male,Pass
+1037,Scarlett Campbell,4,61,Low,Medium,49,Yes,1,44000,Neutral,No,High School,9,Female,Fail
+1038,Ryan Parker,8,87,High,High,81,Yes,5,87000,Positive,No,Post Graduate,2,Male,Pass
+1039,Grace Evans,3,56,Low,Low,41,No,0,28000,Negative,Yes,High School,11,Female,Fail
+1040,Nathan Collins,7,83,Medium,High,73,Yes,4,77000,Positive,No,Graduate,3,Male,Pass
+1041,Chloe Edwards,5,73,Medium,Medium,60,Yes,2,58000,Neutral,No,College,6,Female,Pass
+1042,Jackson Stewart,2,49,Low,Low,36,No,0,22000,Negative,Yes,Middle School,14,Male,Fail
+1043,Victoria Sanchez,8,90,High,High,86,Yes,5,91000,Positive,No,Post Graduate,1,Female,Pass
+1044,Liam Morris,4,66,Low,Medium,44,Yes,1,39000,Negative,No,High School,10,Male,Fail
+1045,Zoe Rogers,7,81,Medium,High,71,Yes,3,69000,Positive,No,College,5,Female,Pass
+1046,Owen Reed,3,57,Low,Low,39,No,0,29000,Negative,Yes,High School,12,Male,Fail
+1047,Lily Cook,9,95,High,High,91,Yes,6,99000,Positive,No,Post Graduate,1,Female,Pass
+1048,Gabriel Morgan,5,67,Medium,Medium,55,Yes,2,53000,Neutral,No,College,8,Male,Pass
+1049,Layla Murphy,2,46,Low,Low,37,No,0,23000,Negative,Yes,Middle School,15,Female,Fail
+1050,Anthony Rivera,8,86,High,High,79,Yes,4,83000,Positive,No,Graduate,2,Male,Pass
+1051,Aubrey Cooper,4,59,Low,Medium,43,Yes,1,38000,Negative,No,High School,10,Female,Fail
+1052,Caleb Richardson,7,87,High,High,82,Yes,5,88000,Positive,No,Post Graduate,1,Male,Pass
+1053,Hannah Cox,3,51,Low,Low,36,No,0,24000,Negative,Yes,Middle School,13,Female,Fail
+1054,Julian Howard,6,76,Medium,High,66,Yes,3,64000,Positive,No,College,5,Male,Pass
+1055,Stella Ward,5,74,Medium,Medium,61,Yes,2,59000,Neutral,No,College,6,Female,Pass
+1056,Aaron Torres,9,96,High,High,92,Yes,6,97000,Positive,No,Post Graduate,1,Male,Pass
+1057,Nora Peterson,4,60,Low,Medium,47,Yes,1,42000,Neutral,No,High School,9,Female,Fail
+1058,Leo Gray,8,89,High,High,85,Yes,5,92000,Positive,No,Graduate,2,Male,Pass
+1059,Eleanor Ramirez,3,54,Low,Low,38,No,0,25000,Negative,Yes,High School,12,Female,Fail
+1060,Hudson James,7,85,Medium,High,77,Yes,4,79000,Positive,No,Graduate,3,Male,Pass
+1061,Ellie Watson,5,75,Medium,Medium,62,Yes,2,60000,Neutral,No,College,6,Female,Pass
+1062,Lincoln Brooks,2,48,Low,Low,35,No,0,21000,Negative,Yes,Middle School,14,Male,Fail
+1063,Violet Kelly,8,91,High,High,87,Yes,5,93000,Positive,No,Post Graduate,1,Female,Pass
+1064,Josiah Sanders,4,64,Low,Medium,46,Yes,1,41000,Neutral,No,High School,9,Male,Fail
+1065,Hazel Price,7,82,Medium,High,72,Yes,3,70000,Positive,No,College,4,Female,Pass
+1066,Christian Bennett,3,55,Low,Low,40,No,0,26000,Negative,Yes,High School,12,Male,Fail
+1067,Penelope Wood,9,94,High,High,89,Yes,6,96000,Positive,No,Post Graduate,1,Female,Pass
+1068,Theodore Barnes,5,72,Medium,Medium,58,Yes,2,56000,Neutral,No,College,7,Male,Pass
+1069,Aria Ross,6,78,Medium,High,67,Yes,3,65000,Positive,No,Graduate,4,Female,Pass
+1070,Miles Henderson,4,63,Low,Medium,45,Yes,1,40000,Negative,No,High School,10,Male,Fail
+1071,Claire Coleman,8,88,High,High,83,Yes,5,89000,Positive,No,Post Graduate,2,Female,Pass
+1072,Tyler Jenkins,3,52,Low,Low,37,No,0,27000,Negative,Yes,Middle School,13,Male,Fail
+1073,Audrey Perry,7,84,Medium,High,75,Yes,4,78000,Positive,No,Graduate,3,Female,Pass
+1074,Jeremiah Powell,5,71,Medium,Medium,57,Yes,2,55000,Neutral,No,College,7,Male,Pass
+1075,Ruby Long,2,47,Low,Low,34,No,0,22000,Negative,Yes,Middle School,15,Female,Fail
+1076,Wyatt Hughes,8,90,High,High,86,Yes,5,94000,Positive,No,Post Graduate,1,Male,Pass
+1077,Bella Foster,4,65,Low,Medium,48,Yes,1,43000,Neutral,No,High School,8,Female,Fail
+1078,Carson Butler,7,83,Medium,High,74,Yes,4,77000,Positive,No,Graduate,3,Male,Pass
+1079,Skylar Simmons,3,56,Low,Low,39,No,0,28000,Negative,Yes,High School,11,Female,Fail
+1080,Xavier Gonzalez,9,95,High,High,90,Yes,6,98000,Positive,No,Post Graduate,1,Male,Pass
+1081,Lucy Fisher,5,70,Medium,Medium,56,Yes,2,54000,Neutral,No,College,8,Female,Pass
+1082,Isaiah Marshall,2,49,Low,Low,36,No,0,23000,Negative,Yes,Middle School,14,Male,Fail
+1083,Leah Warren,8,87,High,High,82,Yes,5,90000,Positive,No,Graduate,2,Female,Pass
+1084,Elias Owens,4,62,Low,Medium,44,Yes,1,39000,Negative,No,High School,10,Male,Fail
+1085,Savannah Murray,7,86,High,High,80,Yes,4,85000,Positive,No,Post Graduate,1,Female,Pass
+1086,Jordan Harrison,3,53,Low,Low,38,No,0,24000,Negative,Yes,Middle School,13,Male,Fail
+1087,Lydia Ferguson,6,79,Medium,High,68,Yes,3,66000,Positive,No,College,5,Female,Pass
+1088,Asher Wells,5,73,Medium,Medium,59,Yes,2,57000,Neutral,No,College,7,Male,Pass
+1089,Naomi Gordon,9,96,High,High,91,Yes,6,97000,Positive,No,Post Graduate,1,Female,Pass
+1090,Hunter Grant,4,61,Low,Medium,47,Yes,1,42000,Neutral,No,High School,9,Male,Fail
+1091,Alice Hayes,8,88,High,High,84,Yes,5,91000,Positive,No,Graduate,2,Female,Pass
+1092,Colton Sullivan,3,54,Low,Low,38,No,0,25000,Negative,Yes,High School,12,Male,Fail
+1093,Eliza Flores,7,85,Medium,High,76,Yes,4,79000,Positive,No,Graduate,3,Female,Pass
+1094,Max Price,5,74,Medium,Medium,60,Yes,2,58000,Neutral,No,College,6,Male,Pass
+1095,Nova Washington,2,48,Low,Low,35,No,0,21000,Negative,Yes,Middle School,15,Female,Fail
+1096,Eli Russell,8,92,High,High,87,Yes,5,93000,Positive,No,Post Graduate,1,Male,Pass
+1097,Willow Griffin,4,64,Low,Medium,46,Yes,1,41000,Neutral,No,High School,9,Female,Fail
+1098,Ezra Diaz,7,81,Medium,High,73,Yes,4,78000,Positive,No,Graduate,3,Male,Pass
+1099,Luna Myers,3,55,Low,Low,39,No,0,26000,Negative,Yes,High School,11,Female,Fail
+1100,Mason Ford,9,93,High,High,88,Yes,6,95000,Positive,No,Post Graduate,1,Male,Pass

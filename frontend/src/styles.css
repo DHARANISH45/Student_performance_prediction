@@ -1,6 +1,186 @@
-body { font-family: Inter, Arial, sans-serif; background: linear-gradient(135deg,#f6f8ff,#f9fbf7); margin:0; padding:20px; color:#222; }
-.app { max-width:1100px; margin:0 auto; }
-.header { text-align:center; margin-bottom:18px; }
-.auth-card { max-width:520px; margin:24px auto; padding:16px; }
-input, select { padding:8px; border-radius:6px; border:1px solid #e6e9ef; width:100%; }
-.result-card { background:#f7fff7; padding:8px; border-radius:8px; margin-top:8px; }
+/* Global Styles */
+body { 
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #f6f8ff, #f9fbf7);
+  margin: 0;
+  padding: 20px;
+  color: #222;
+  line-height: 1.6;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header and Auth Components */
+.header { 
+  text-align: center; 
+  margin-bottom: 18px;
+  padding: 24px;
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+.auth-card { 
+  max-width: 520px; 
+  margin: 24px auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Elements */
+input, select { 
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  width: 100%;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  background-color: #f9fafc;
+  margin-bottom: 8px;
+}
+
+input:focus, select:focus {
+  border-color: #4b6cb7;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.15);
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Dashboard Components */
+.dashboard-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  background: #fff;
+  height: 100%;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  padding: 16px;
+  background: linear-gradient(135deg, #f6f8ff, #e9f7ff);
+  border-bottom: 1px solid #eaeef3;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f7fc;
+  font-weight: 600;
+  color: #3a3b45;
+  border-bottom: 2px solid #e0e7ff;
+  position: sticky;
+  top: 0;
+}
+
+tr:nth-child(even) {
+  background-color: #f9fafc;
+}
+
+tr:hover {
+  background-color: #f0f4ff;
+}
+
+/* Result Cards */
+.result-card { 
+  padding: 16px; 
+  border-radius: 12px; 
+  margin-top: 16px;
+  transition: all 0.3s ease;
+}
+
+.result-card.pass {
+  background-color: #e8f5e9;
+  border: 1px solid #4caf50;
+}
+
+.result-card.fail {
+  background-color: #ffebee;
+  border: 1px solid #ef5350;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart Containers */
+.chart-container {
+  height: 300px;
+  width: 100%;
+  padding: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .auth-card {
+    margin: 16px auto;
+    padding: 16px;
+  }
+  
+  input, select {
+    padding: 10px;
+  }
+  
+  th, td {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+/* Animation for Transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}

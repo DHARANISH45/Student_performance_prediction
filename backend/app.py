@@ -46,38 +46,108 @@ def decode_token(token):
 
 @app.route('/api/login', methods=['POST'])
 def login():
+    print("Login request received:", request.json)
     data = request.json or {}
     role = data.get('role')
+    
+    print(f"Login role: {role}, Data received: {data}")
+    
     if role=='teacher':
         email = data.get('email'); pw = data.get('password')
         u = USERS.get(email)
         if u and u.get('password')==pw:
             token = create_token({'email':email,'role':'teacher'})
             return jsonify({'ok':True,'token':token,'role':'teacher'})
-        return jsonify({'ok':False,'message':'Invalid teacher creds'}),401
+        return jsonify({'ok':False,'message':'Invalid teacher credentials'}),401
     else:
-        sid = str(data.get('id')); pw = str(data.get('password'))
+        # Handle student login
+        print(f"Full student login request data: {data}")
+        
+        # Get student ID from either id or email field (backward compatibility)
+        sid = data.get('id')
+        if sid is None:
+            # Try to get ID from email field (older form submissions might use this)
+            sid = data.get('email')
+            print(f"No 'id' field found, using 'email' field instead: {sid}")
+        
+        print(f"Raw student ID from request: {sid}, Type: {type(sid)}")
+        
+        # Check if ID is missing or None
+        if sid is None:
+            print("Student ID is None/missing in request")
+            return jsonify({'ok':False,'message':'Student ID is required'}),400
+        
+        # Convert to string and clean up
+        sid = str(sid).strip()
+        pw = str(data.get('password', '')).strip()
+        print(f"Processed student login attempt - ID: '{sid}', Password: '{pw}'")
+        
+        # Check if ID is empty after processing
+        if not sid:
+            print("Student ID is empty after processing")
+            return jsonify({'ok':False,'message':'Student ID is required'}),400
+            
+        # Check if password is empty
+        if not pw:
+            print("Password is empty")
+            return jsonify({'ok':False,'message':'Password is required'}),400
+            
         # check student id exists in any CSV in data/
         df = None
         for f in os.listdir(DATA_DIR):
             if f.lower().endswith('.csv'):
                 try:
                     df = pd.read_csv(os.path.join(DATA_DIR,f))
+                    print(f"Found data file: {f} with {len(df)} records")
                     break
-                except:
+                except Exception as e:
+                    print(f"Error reading file {f}: {str(e)}")
                     continue
         if df is None:
             return jsonify({'ok':False,'message':'No student data available on server'}),400
+            
         # assume student_id column exists or assign by index
         if 'student_id' not in df.columns:
             # create student_id sequential starting at 1001
             df = df.copy()
             df.insert(0, 'student_id', range(1001, 1001 + len(df)))
-        exists = df['student_id'].astype(str).isin([sid]).any()
-        if exists and (pw=='student123' or pw==sid):
-            token = create_token({'id':sid,'role':'student'})
-            return jsonify({'ok':True,'token':token,'role':'student','id':sid})
-        return jsonify({'ok':False,'message':'Invalid student creds'}),401
+            print("Added student_id column")
+        
+        # Convert student_id column to string for proper comparison
+        df['student_id'] = df['student_id'].astype(str).str.strip()
+        
+        # Print all student IDs for debugging
+        student_ids = df['student_id'].tolist()
+        print(f"First 5 student IDs in data: {student_ids[:5]}")
+        print(f"Looking for student ID: '{sid}' in database")
+        
+        # Check if student ID exists using explicit comparison
+        exists = False
+        for db_id in student_ids:
+            if str(db_id).strip() == sid:
+                exists = True
+                print(f"Found matching ID: '{db_id}' == '{sid}'")
+                break
+        
+        print(f"Student ID '{sid}' exists in data: {exists}")
+        
+        # Check password (only student123 is valid)
+        valid_pw = (pw == 'student123')
+        print(f"Password valid: {valid_pw}")
+        
+        # Handle error cases
+        if not exists:
+            print(f"Login failed: Student ID '{sid}' not found in database")
+            return jsonify({'ok':False,'message':f'Student ID {sid} not found in database'}),401
+            
+        if not valid_pw:
+            print(f"Login failed: Incorrect password for Student ID '{sid}'")
+            return jsonify({'ok':False,'message':'Incorrect password'}),401
+            
+        # Success case
+        token = create_token({'id':sid,'role':'student'})
+        print(f"Student login successful for ID: {sid}")
+        return jsonify({'ok':True,'token':token,'role':'student','id':sid})
 
 def require_auth_role(req, role=None):
     auth = req.headers.get('Authorization','')
@@ -169,11 +239,14 @@ def upload_csv():
                 'message': f'Missing required columns: {", ".join(missing_columns)}'
             }), 400
         
-        # Add student_id if it doesn't exist
+            # Add student_id if it doesn't exist
         if 'student_id' not in df.columns:
             df.insert(0, 'student_id', range(1001, 1001 + len(df)))
             
-        # Generate predictions for all students if model exists
+        # Add Student_Name if it doesn't exist
+        if 'Student_Name' not in df.columns:
+            # Generate placeholder names
+            df.insert(1, 'Student_Name', [f'Student_{i}' for i in range(len(df))])        # Generate predictions for all students if model exists
         global model
         if model is not None:
             try:
@@ -211,7 +284,26 @@ def upload_csv():
                 
                 # Make predictions using the model pipeline (which applies the preprocessing)
                 predictions = model.predict(X_pred)
-                probabilities = model.predict_proba(X_pred)[:, 1] if hasattr(model, 'predict_proba') else None
+                
+                # Safely handle probabilities with error handling
+                probabilities = None
+                try:
+                    if hasattr(model, 'predict_proba'):
+                        proba_result = model.predict_proba(X_pred)
+                        
+                        # Handle different shapes of probability results
+                        if proba_result.ndim > 1 and proba_result.shape[1] >= 2:
+                            # Standard case - get probability of positive class (usually index 1)
+                            probabilities = proba_result[:, 1]
+                        elif proba_result.ndim > 0 and proba_result.size > 0:
+                            # Single probability value
+                            probabilities = proba_result.flatten()
+                        else:
+                            # Fallback if shape is unexpected
+                            probabilities = np.array([1.0 if pred == 1 else 0.0 for pred in predictions])
+                except Exception as e:
+                    print(f"Error calculating probabilities: {str(e)}")
+                    probabilities = np.array([1.0 if pred == 1 else 0.0 for pred in predictions])
                 
                 # Add predictions to dataframe
                 df['result'] = ['Pass' if pred == 1 else 'Fail' for pred in predictions]
@@ -292,10 +384,17 @@ def predict():
                 return jsonify({'ok':False,'message':'Model load error: '+str(e)}),500
         else:
             return jsonify({'ok':False,'message':'Model not available. Please train first.'}),400
-    # expected features: client should send the 13 fields
+    # expected features: client should send the 13 fields (Student_Name is not used for prediction)
     expected = ['Hours_Studied','Attendance','Parental_Involvement','Access_to_Resources','Previous_Scores','Internet_Access','Tutoring_Sessions','Family_Income','Peer_Influence','Learning_Disabilities','Parental_Education_Level','Distance_from_Home','Gender']
     try:
-        df = pd.DataFrame([payload])
+        # Create a dataframe from payload but ensure Student_Name is not used in prediction
+        if 'Student_Name' in payload:
+            student_name = payload.pop('Student_Name')  # Remove but save it
+            df = pd.DataFrame([payload])
+            # Add it back after prediction if needed
+            payload['Student_Name'] = student_name
+        else:
+            df = pd.DataFrame([payload])
         
         # Handle missing fields with appropriate defaults
         numeric_fields = ['Hours_Studied', 'Attendance', 'Previous_Scores', 'Tutoring_Sessions', 'Family_Income', 'Distance_from_Home']
@@ -326,7 +425,35 @@ def predict():
         
         # Use model's predict method - it will apply the same preprocessing as during training
         pred = model.predict(df)[0]
-        prob = float(model.predict_proba(df)[0][1]) if hasattr(model, 'predict_proba') else (1.0 if pred==1 else 0.0)
+        
+        # Handle predict_proba safely with error catching
+        try:
+            if hasattr(model, 'predict_proba'):
+                proba_result = model.predict_proba(df)
+                
+                # Debug information
+                print(f"Prediction result: {pred}")
+                print(f"Probability shape: {proba_result.shape}")
+                
+                # Handle different shapes of probability results
+                if proba_result.ndim > 1 and proba_result.shape[1] >= 2:
+                    # If we have a probability for each class (standard case)
+                    prob = float(proba_result[0][1])
+                    print(f"Using probability from array: {prob}")
+                elif proba_result.ndim > 0 and proba_result.size > 0:
+                    # If we have a single probability value
+                    prob = float(proba_result[0])
+                    print(f"Using single probability value: {prob}")
+                else:
+                    # Fallback
+                    prob = 1.0 if int(pred) == 1 else 0.0
+                    print(f"Using fallback probability: {prob}")
+            else:
+                prob = 1.0 if int(pred) == 1 else 0.0
+                print(f"Model has no predict_proba method, using fallback: {prob}")
+        except Exception as e:
+            print(f"Error calculating probability: {str(e)}")
+            prob = 1.0 if int(pred) == 1 else 0.0
         
         # Return detailed information about the prediction
         return jsonify({
